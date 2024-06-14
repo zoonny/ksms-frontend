@@ -16,9 +16,11 @@ const LogoSection = ({ sx, to }) => {
   return (
     <ButtonBase disableRipple component={Link} to={!to ? config.defaultPath : to} sx={sx}>
       <Stack direction="row" spacing={1} alignItems="center">
-        <Logo />
+        {/* <Logo /> */}
+        <h1>{"KSMS"}</h1>
         <Chip
-          label={import.meta.env.VITE_APP_VERSION}
+          // label={import.meta.env.VITE_APP_VERSION}
+          label={"0.7.1"}
           variant="outlined"
           size="small"
           color="secondary"

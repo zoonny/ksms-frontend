@@ -1,7 +1,8 @@
-import { Input, Stack, Typography } from '@mui/material';
+import { Button, Input, Stack, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
 import useSWR from 'swr';
 import usePost from './usePost';
+import { create } from 'zustand';
 
 // const Card1 = () => {
 //   const fetcher = (...args) => fetch(...args).then((response) => response.json());
@@ -18,8 +19,18 @@ import usePost from './usePost';
 //   );
 // };
 
+// const store = create((set) => ({
+//   posts: [],
+//   addPost: (post) => set((state) => ({ posts: [...state.posts, post] }))
+// }));
+
+const useStore = create(() => ({
+  like: 0
+}));
+
 const Card1 = () => {
   const { post, error, isLoading } = usePost(1);
+  const like = useStore((state) => state.like);
 
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
@@ -27,13 +38,18 @@ const Card1 = () => {
   return (
     <MainCard title="Post">
       <h2>{post.title}</h2>
-      <Typography>{post.body}</Typography>
+      <Typography gutterBottom>{post.body}</Typography>
+      <Typography variant="caption" display="block" gutterBottom>
+        {like}
+      </Typography>
+      <Button onClick={() => useStore.setState({ like: like + 1 })}>Like</Button>
     </MainCard>
   );
 };
 
 const Card2 = () => {
   const { post, error, isLoading } = usePost(1);
+  const like = useStore((state) => state.like);
 
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
@@ -42,6 +58,7 @@ const Card2 = () => {
     <MainCard title="Post">
       <h2>{post.title}</h2>
       <Typography>{post.body}</Typography>
+      <Typography variant="caption">{like}</Typography>
     </MainCard>
   );
 };

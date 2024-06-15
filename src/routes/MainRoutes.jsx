@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project import
 import Loadable from 'components/Loadable';
 import DashboardLayout from 'layout/DashboardLayout';
+import PlayPage from 'pages/extra-pages/play-page';
 
 const Color = Loadable(lazy(() => import('pages/component-overview/color')));
 const Typography = Loadable(lazy(() => import('pages/component-overview/typography')));
@@ -38,6 +39,10 @@ const MainRoutes = {
     {
       path: 'sample-page',
       element: <SamplePage />
+    },
+    {
+      path: 'play-page',
+      element: <PlayPage />
     },
     {
       path: 'shadow',

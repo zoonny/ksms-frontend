@@ -22,6 +22,24 @@ const support = {
       icon: icons.ChromeOutlined
     },
     {
+      id: 'play-page',
+      title: 'Play Page',
+      // type: 'collapse',
+      // group, collapse, item
+      type: 'item',
+      url: '/play-page',
+      icon: icons.ChromeOutlined,
+      children: [
+        {
+          id: 'play-page',
+          title: 'Play Page',
+          type: 'item',
+          url: '/play-page',
+          icon: icons.ChromeOutlined
+        }
+      ]
+    },
+    {
       id: 'documentation',
       title: 'Documentation',
       type: 'item',

@@ -28,16 +28,23 @@ const support = {
       // group, collapse, item
       type: 'item',
       url: '/play-page',
-      icon: icons.ChromeOutlined,
-      children: [
-        {
-          id: 'play-page',
-          title: 'Play Page',
-          type: 'item',
-          url: '/play-page',
-          icon: icons.ChromeOutlined
-        }
-      ]
+      icon: icons.ChromeOutlined
+      // children: [
+      //   {
+      //     id: 'play-page',
+      //     title: 'Play Page',
+      //     type: 'item',
+      //     url: '/play-page',
+      //     icon: icons.ChromeOutlined
+      //   }
+      // ]
+    },
+    {
+      id: 'example-page',
+      title: 'Example Page',
+      type: 'item',
+      url: '/example-page',
+      icon: icons.ChromeOutlined
     },
     {
       id: 'documentation',

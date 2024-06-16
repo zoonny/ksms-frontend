@@ -24,8 +24,14 @@ import { create } from 'zustand';
 //   addPost: (post) => set((state) => ({ posts: [...state.posts, post] }))
 // }));
 
-const useStore = create(() => ({
-  like: 0
+// const useStore = create(() => ({
+//   like: 0
+// }));
+
+const useStore = create((set) => ({
+  like: 0,
+  increaseLike: () => set((state) => ({ like: state.like + 1 })),
+  decreaseLike: (unlike) => set((state) => ({ like: state.like - unlike }))
 }));
 
 const Card1 = () => {
@@ -49,7 +55,7 @@ const Card1 = () => {
 
 const Card2 = () => {
   const { post, error, isLoading } = usePost(1);
-  const like = useStore((state) => state.like);
+  const { like, decreaseLike } = useStore((state) => state);
 
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
@@ -58,7 +64,10 @@ const Card2 = () => {
     <MainCard title="Post">
       <h2>{post.title}</h2>
       <Typography>{post.body}</Typography>
-      <Typography variant="caption">{like}</Typography>
+      <Typography variant="caption" display="block" gutterBottom>
+        {like}
+      </Typography>
+      <Button onClick={() => decreaseLike(2)}>Unlike</Button>
     </MainCard>
   );
 };

@@ -1,12 +1,12 @@
 {
-  "name": "mantis-free-react-admin-template",
-  "version": "1.3.0",
+  "name": "ksms",
+  "version": "0.7.1",
   "private": true,
-  "homepage": "https://mantisdashboard.io/free",
+  "homepage": "http://localhost:3000/ksms",
   "author": {
-    "name": "CodedThemes",
-    "email": "codedthemes@gmail.com",
-    "url": "https://codedthemes.com/"
+    "name": "hyung",
+    "email": "hyung@kt.com",
+    "url": "http://localhost:3000/"
   },
   "scripts": {
     "start": "vite",

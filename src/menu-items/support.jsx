@@ -1,10 +1,12 @@
 // assets
 import { ChromeOutlined, QuestionOutlined } from '@ant-design/icons';
+import { QrCode2Outlined } from '@mui/icons-material';
 
 // icons
 const icons = {
   ChromeOutlined,
-  QuestionOutlined
+  QuestionOutlined,
+  QrCode2Outlined
 };
 
 // ==============================|| MENU ITEMS - SAMPLE PAGE & DOCUMENTATION ||============================== //
@@ -19,7 +21,7 @@ const support = {
       title: 'Sample Page',
       type: 'item',
       url: '/sample-page',
-      icon: icons.ChromeOutlined
+      icon: ChromeOutlined
     },
     {
       id: 'play-page',
@@ -45,6 +47,13 @@ const support = {
       type: 'item',
       url: '/example-page',
       icon: icons.ChromeOutlined
+    },
+    {
+      id: 'qrcode-page',
+      title: 'QRCode Page',
+      type: 'item',
+      url: '/qrcode-page',
+      icon: icons.QrCode2Outlined
     },
     {
       id: 'documentation',

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Box, Stack } from '@mui/material';
 import { RichTreeView } from '@mui/x-tree-view';
 import { List, ListItem, ListItemText, Collapse } from '@mui/material';
@@ -143,6 +143,20 @@ const menuData = [
         items: []
       },
       {
+        title: 'QRCode Page',
+        path: '/qrcode-page',
+        icon: null,
+        depth: 1,
+        items: []
+      },
+      {
+        title: 'QRCode Scanner Page',
+        path: '/qrcode-scanner-page',
+        icon: null,
+        depth: 1,
+        items: []
+      },
+      {
         title: 'Documentation',
         path: '',
         icon: null,
@@ -153,30 +167,52 @@ const menuData = [
   }
 ];
 
-// MenuItem component
-const MenuItem = ({ item, onClick, expandedItems }) => {
-  const isExpanded = expandedItems.includes(item.title);
-  const px = useMemo(() => item.depth + 1);
-  const navigate = useNavigate();
+function findObjectsInArray(arr, key, value) {
+  let result = [];
 
-  const handleMenuClick = (item) => {
-    if (item.path) {
-      navigate(item.path, { state: { val: 'test' } });
+  function search(array) {
+    for (const item of array) {
+      if (item[key] === value) {
+        result.push(item);
+      }
+      for (const k in item) {
+        if (typeof item[k] === 'object' && item[k] !== null) {
+          if (Array.isArray(item[k])) {
+            search(item[k]);
+          } else {
+            search([item[k]]);
+          }
+        }
+      }
     }
-  };
+  }
+
+  search(arr);
+  return result;
+}
+
+// MenuItem component
+const MenuItem = ({ item, onClick, expandedItems, activeItem }) => {
+  const isExpanded = expandedItems.includes(item.title);
+  const paddingLeft = useMemo(() => item.depth + 1, []);
+  const isActive = activeItem?.title === item.title;
 
   return (
     <>
-      <ListItem button onClick={() => onClick(item.title)}>
+      <ListItem
+        button
+        onClick={() => onClick(item)}
+        sx={isActive ? { color: 'primary.light', fontWeight: 'bold' } : { color: 'text.primary' }}
+      >
         {item.icon}
-        <ListItemText primary={item.title} sx={{ paddingLeft: px }} onClick={() => handleMenuClick(item)} />
+        <ListItemText primary={item.title} sx={{ paddingLeft: paddingLeft }} />
         {item.items.length > 0 ? isExpanded ? <UpOutlined /> : <DownOutlined /> : null}
       </ListItem>
       {item.items.length > 0 && (
         <Collapse in={isExpanded} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.items.map((subItem) => (
-              <MenuItem key={subItem.title} item={subItem} onClick={onClick} expandedItems={expandedItems} />
+              <MenuItem key={subItem.title} item={subItem} onClick={onClick} expandedItems={expandedItems} activeItem={activeItem} />
             ))}
           </List>
         </Collapse>
@@ -188,17 +224,29 @@ const MenuItem = ({ item, onClick, expandedItems }) => {
 // Menu component
 const Menu = ({ data }) => {
   const [expandedItems, setExpandedItems] = useState([]);
+  const [activeItem, setActiveItem] = useState(undefined);
+  const navigate = useNavigate();
 
-  const handleClick = (title) => {
-    setExpandedItems((prev) => (prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]));
-  };
+  useEffect(() => {
+    const item = findObjectsInArray(data, 'title', 'Dashboard');
+    setActiveItem(Array.isArray(item) ? item[0] : item);
+    setExpandedItems(['Navigation']);
+  }, []);
+
+  const handleClick = useCallback((item) => {
+    setExpandedItems((prev) => (prev.includes(item.title) ? prev.filter((i) => i !== item.title) : [...prev, item.title]));
+    if (item.path) {
+      navigate(item.path, { state: { val: 'test' } });
+      setActiveItem(item);
+    }
+  }, []);
 
   return (
     <>
-      {/* {JSON.stringify(expandedItems)} */}
+      {/* <div>{JSON.stringify(activeItem)}</div> */}
       <List>
         {data.map((item) => (
-          <MenuItem key={item.title} item={item} onClick={handleClick} expandedItems={expandedItems} />
+          <MenuItem key={item.title} item={item} onClick={handleClick} expandedItems={expandedItems} activeItem={activeItem} />
         ))}
       </List>
     </>

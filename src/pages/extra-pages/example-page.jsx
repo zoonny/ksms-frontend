@@ -89,8 +89,8 @@ function ExamplePage(props) {
     <div>
       <h1>Navigator Menu</h1>
       <Menu data={menuData} />
-      <h2>Props: {JSON.stringify(props)}</h2>
-      <h2>State: {JSON.stringify(state)}</h2>
+      <h3>props: {JSON.stringify(props)}</h3>
+      <h3>state: {JSON.stringify(state)}</h3>
     </div>
   );
 }
